@@ -1,9 +1,9 @@
-import { IAssets } from "assets"
+import { IAssets } from 'assets';
 
 export type TProduct = {
-	id: string
-	icon?: keyof IAssets
-	price: number
-	productName: string
-	description?: string
-}
+  id: string;
+  price: number;
+  productName: string;
+  description?: string;
+  icon?: keyof IAssets;
+};

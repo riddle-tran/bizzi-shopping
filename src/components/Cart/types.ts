@@ -1,5 +1,5 @@
-import { TProduct } from 'components/Product/types'
+import { TProduct } from 'components/Product/types';
 
 export type TCart = TProduct & {
-	quantity: number
-}
+  quantity: number;
+};

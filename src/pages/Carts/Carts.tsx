@@ -13,7 +13,7 @@ const Carts: React.FC<CartsProps> = () => {
   const navigate = useNavigate();
 
   // Action handlers
-  const handlerRemoveCart = useCallback((id: string) => {}, []);
+  const handlerRemoveCart = useCallback(() => {}, []);
 
   // Renders
   return (

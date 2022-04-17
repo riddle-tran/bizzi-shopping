@@ -1,6 +1,6 @@
-import { TProduct } from './types'
+import { TProduct } from './types';
 
 export interface ProductProps {
-	product: TProduct
-  onAddCart?: (id: string) => void
+  product: TProduct;
+  onAddCart?: (id: string) => void;
 }

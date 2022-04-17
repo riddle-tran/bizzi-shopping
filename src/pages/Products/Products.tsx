@@ -93,7 +93,7 @@ const Products: React.FC<ProductsProps> = () => {
   const navigate = useNavigate();
 
   // Action handlers
-  const handlerAddCart = useCallback((id: string) => {}, []);
+  const handlerAddCart = useCallback(() => {}, []);
 
   // Renders
   return (
