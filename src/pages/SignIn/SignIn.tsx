@@ -36,6 +36,8 @@ const SignIn: React.FC<SignInProps> = () => {
 
     const githubLoginUrl = `${GITHUB_AUTHORIZE_URL}${params}`;
 
+    console.log('githubLoginUrl', githubLoginUrl);
+
     window.location.replace(githubLoginUrl);
   }, []);
 
