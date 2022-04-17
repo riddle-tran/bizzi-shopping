@@ -1,0 +1,25 @@
+.quantity-cart-wrapper {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.quantity-cart-wrapper p {
+  margin: 8px;
+  font-weight: bold;
+  padding: 8px;
+  font-size: 1.25em;
+  margin: 0;
+}
+
+.quantity-cart-wrapper .shopping-cart-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: transparent;
+}
+
+.quantity-cart-wrapper .shopping-cart-btn:hover {
+  cursor: pointer;
+}
