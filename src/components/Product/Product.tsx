@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Assets from 'assets';
+
 import './Products.css';
 import { ProductProps } from './interfaces';
 
@@ -8,14 +10,18 @@ const Product: React.FC<ProductProps> = ({
   onAddCart,
 }: ProductProps) => {
   // Constants
-  const { id, icon, price, description } = product;
+  const { id, thumbnail, price, description } = product;
 
   // Renderers
   return (
     <div className='container' id={`product_${id}`}>
       <div className='flex-between'>
         <div className='product'>
-          <img className='img' src={`${icon}`} alt='product avatar' />
+          <img
+            className='img'
+            alt='product avatar'
+            src={`${Assets[thumbnail ?? 'Node']}`}
+          />
         </div>
         <span className='price'>{price}$</span>
       </div>

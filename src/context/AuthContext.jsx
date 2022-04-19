@@ -1,37 +1,34 @@
-import React, { useMemo, Dispatch } from 'react';
+import React, { useMemo, Dispatch, useEffect } from 'react';
 
+import { IUser, TRole } from 'entities/user';
 import useLocalStorage from 'hooks/useLocalStorage';
 
-export type TProvider = 'Github';
-export interface IUser {
-  id: string;
-  email: string;
-  userName: string;
-  avatarUrl: string;
-  provide: TProvider;
-  displayName: string;
-}
-
 export interface AuthState {
-  user: IUser;
+  user?: IUser;
+  role: TRole;
   token: string;
   initialized: Boolean;
 }
 
 export type AuthAction =
-  | { type: 'signOut', cb?: (authState: AuthState) => void }
+  | {
+      type: 'initialize',
+    }
   | {
       type: 'signIn',
       payload: Partial<AuthState>,
       cb?: (authState: AuthState) => void,
     }
   | {
-      type: 'initialize',
-      payload: AuthState,
-    };
+      type: 'updateFromStorage',
+      payload: Partial<AuthState>,
+    }
+  | { type: 'signOut', cb?: (authState: AuthState) => void };
 
 export const AuthInitialState: AuthState = {
-  token: '',
+  user: {},
+  role: 'user',
+  token: undefined,
   initialized: false,
 };
 
@@ -41,8 +38,7 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case 'initialize': {
-      const { payload } = action;
-      const state: AuthState = { ...prevState, ...payload, initialized: true };
+      const state: AuthState = { ...prevState, initialized: true };
       return state;
     }
     case 'signIn': {
@@ -53,9 +49,21 @@ export const authReducer = (
     }
     case 'signOut': {
       const { cb } = action;
-      // eslint-disable-next-line no-undef
-      const state: AuthState = { ...prevState, ...payload, initialized: true };
+      const state: AuthState = {
+        ...prevState,
+        ...AuthInitialState,
+        initialized: true,
+      };
       cb?.(state);
+      return state;
+    }
+    case 'updateFromStorage': {
+      const { payload } = action;
+      const state: AuthState = {
+        ...prevState,
+        ...payload,
+        initialized: true,
+      };
       return state;
     }
     default:
@@ -64,7 +72,6 @@ export const authReducer = (
 };
 
 const authContext: {
-  stored: AuthState,
   authState: AuthState,
   authDispatch: Dispatch<AuthAction>,
   setStore: (auth: AuthState) => void,
@@ -84,8 +91,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const { storedValue, setValue } = useLocalStorage([
     'user',
+    'role',
     'token',
-    'initialize',
+    'initialized',
   ]);
 
   const authContextValue = useMemo(
@@ -97,6 +105,13 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     }),
     [authState, setValue, storedValue],
   );
+
+  useEffect(() => {
+    authDispatch({
+      type: 'updateFromStorage',
+      payload: { ...storedValue },
+    });
+  }, [storedValue]);
 
   return (
     <AuthContext.Provider value={authContextValue}>

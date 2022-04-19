@@ -1,14 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
+import { IProduct } from 'entities/product';
+
 import Product from './Product';
 
-const dataTest = {
+const dataTest: IProduct = {
   id: '1',
   price: 99,
-  productName: 'tets',
+  name: 'node',
+  thumbnail: 'Github',
   description: 'test cart',
-  icon: 'dsada',
 };
 
 test('renders cart', () => {
@@ -24,6 +26,6 @@ test('renders cart', () => {
 test('Product image', () => {
   render(<Product product={dataTest} />);
   const productImg = screen.getByRole('img');
-  expect(productImg).toHaveAttribute('src', dataTest.icon);
   expect(productImg).toHaveAttribute('alt', 'product avatar');
+  expect(productImg).toHaveAttribute('src', dataTest.thumbnail);
 });

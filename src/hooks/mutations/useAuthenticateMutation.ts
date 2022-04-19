@@ -1,6 +1,6 @@
 import { gql, useMutation, MutationHookOptions } from '@apollo/client';
 
-import { IUser } from 'context/AuthContext';
+import { IUser, TRole } from 'entities/user';
 
 export interface TAuthenticateRequestParams {
   code: string;
@@ -10,8 +10,9 @@ export interface TAuthenticateResponse {
     error: string;
     ok: boolean;
     data: {
-      token: string;
       user: IUser;
+      role: TRole;
+      token: string;
     };
   };
 }
@@ -30,6 +31,7 @@ const useAuthenticateMutation = (
           ok
           data {
             token
+            role
             user {
               id
               email

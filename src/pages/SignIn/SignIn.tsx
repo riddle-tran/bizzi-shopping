@@ -36,8 +36,6 @@ const SignIn: React.FC<SignInProps> = () => {
 
     const githubLoginUrl = `${GITHUB_AUTHORIZE_URL}${params}`;
 
-    console.log('githubLoginUrl', githubLoginUrl);
-
     window.location.replace(githubLoginUrl);
   }, []);
 
@@ -62,12 +60,14 @@ const SignIn: React.FC<SignInProps> = () => {
       authDispatch({
         type: 'signIn',
         payload: {
-          token: result.token,
+          role: result.role,
           user: result.user,
+          token: result.token,
         },
+        cb: setStore,
       });
     }
-  }, [authDispatch, data, setStore]);
+  }, [data, authDispatch, setStore]);
 
   if (loading) return <div className='signIn'>Submitting...</div>;
   if (error)

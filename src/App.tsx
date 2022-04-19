@@ -6,11 +6,11 @@ import { AuthContext } from 'context/AuthContext';
 import AppLoading from 'components/AppLoading/AppLoading';
 
 const App = () => {
-  const { authState, stored, authDispatch } = useContext(AuthContext);
+  const { authState, authDispatch } = useContext(AuthContext);
 
   useEffect(() => {
-    authDispatch({ type: 'initialize', payload: stored });
-  }, [authDispatch, stored]);
+    authDispatch({ type: 'initialize' });
+  }, [authDispatch]);
 
   return (
     <Suspense fallback={<AppLoading />}>

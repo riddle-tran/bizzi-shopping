@@ -22,7 +22,7 @@ function useLocalStorage<T>(keys: Array<keyof T>) {
     try {
       const value: T = {} as T;
       keys.forEach((key) => {
-        const item = window.localStorage.getItem(String(key));
+        const item = window.localStorage.getItem(String(key)) || undefined;
         value[key] = item && isJsonString(item) ? JSON.parse(item) : item;
       });
       return value;
@@ -49,7 +49,15 @@ function useLocalStorage<T>(keys: Array<keyof T>) {
 
       try {
         keys.forEach((key) => {
-          window.localStorage.setItem(String(key), JSON.stringify(value[key]));
+          const data = value[key];
+          console.log(data);
+          if (data === undefined) {
+            window.localStorage.removeItem(String(key));
+          } else if (typeof data === 'string') {
+            window.localStorage.setItem(String(key), data);
+          } else {
+            window.localStorage.setItem(String(key), JSON.stringify(data));
+          }
         });
 
         // Save state

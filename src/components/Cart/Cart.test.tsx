@@ -1,16 +1,15 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import Cart from './Cart';
-import { TCart } from './types';
+import { ICart } from 'entities/cart';
 
-const dataTest: TCart = {
-  id: '1',
-  price: 99,
-  productName: 'tets',
-  quantity: 2,
-  description: ' test cart',
-  icon: 'dsada',
+import Cart from './Cart';
+
+const dataTest: ICart = {
+  id: '12',
+  quantity: 12,
+  userId: '11',
+  productId: 'ppp',
 };
 
 test('renders cart', () => {
@@ -32,6 +31,6 @@ test('renders cart', () => {
 test('Cart image', () => {
   render(<Cart cart={{ ...dataTest }} />);
   const cartImg = screen.getByRole('img');
-  expect(cartImg).toHaveAttribute('src', dataTest.icon);
+  // expect(cartImg).toHaveAttribute('src', dataTest.icon);
   expect(cartImg).toHaveAttribute('alt', 'cart avatar');
 });

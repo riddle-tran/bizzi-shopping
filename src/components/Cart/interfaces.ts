@@ -1,6 +1,6 @@
-import { TCart } from './types';
+import { ICart } from 'entities/cart';
 
 export interface CartProps {
-  cart: TCart;
+  cart: ICart;
   onRemoveCart?: (id: string) => void;
 }

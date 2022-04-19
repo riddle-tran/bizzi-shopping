@@ -10,6 +10,7 @@ const Carts = lazy(() => import('pages/Carts'));
 const Login = lazy(() => import('pages/SignIn'));
 const Products = lazy(() => import('pages/Products'));
 const BasicLayout = lazy(() => import('layouts/BasicLayout'));
+const CreateProduct = lazy(() => import('pages/CreateProduct'));
 
 const DefaultRouteComponent: React.FC = () => (
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -25,6 +26,7 @@ export interface IRoutes {
   path?: string;
   index?: boolean;
   isAuth?: boolean;
+  isAdmin?: boolean;
   routes?: Record<string, IRoutes>;
 }
 
@@ -42,7 +44,6 @@ export const Routes = {
 
     // Optional
     path: '/*',
-    isAuth: true,
     routes: {
       indexHome: {
         id: 'indexHome',
@@ -50,6 +51,15 @@ export const Routes = {
 
         // Optional
         index: true,
+      },
+      createProduct: {
+        id: 'createProduct',
+        Element: CreateProduct,
+
+        // Optional
+        isAuth: true,
+        isAdmin: true,
+        path: 'createProduct',
       },
       products: {
         id: 'products',
@@ -63,6 +73,7 @@ export const Routes = {
         Element: Carts,
 
         // Optional
+        isAuth: true,
         path: 'carts',
       },
       default: {
@@ -92,6 +103,7 @@ export const RouteComponentWrapper = (
     index,
     isAuth,
     Element,
+    isAdmin,
     routes: childRoutes,
   }: IRoutes,
   authState: AuthState,
@@ -101,6 +113,34 @@ export const RouteComponentWrapper = (
   // Renders
   if (!authState.initialized)
     return <Route key={id} path={path} element={<AppLoading />} />;
+
+  if (!authState.token && isAuth)
+    return (
+      <Route
+        key={id}
+        path={path}
+        element={
+          <Navigate
+            to={Routes.home.routes.products.path || '/'}
+            state={{ from: location }}
+          />
+        }
+      />
+    );
+
+  if (!authState.token && isAuth && isAdmin && authState.role !== 'admin')
+    return (
+      <Route
+        key={id}
+        path={path}
+        element={
+          <Navigate
+            to={Routes.home.routes.products.path || '/'}
+            state={{ from: location }}
+          />
+        }
+      />
+    );
 
   if (!authState.token && isAuth)
     return (
