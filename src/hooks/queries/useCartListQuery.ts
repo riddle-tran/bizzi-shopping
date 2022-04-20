@@ -37,9 +37,15 @@ const useCartListQuery = (
           ok
           data {
             id
-            userId
+            user
             quantity
-            productId
+            product {
+              id
+              name
+              price
+              thumbnail
+              description
+            }
           }
         }
       }

@@ -3,8 +3,8 @@ import { IProduct } from './product';
 
 export interface ICartBase {
   quantity: number;
-  userId: IUser['id'];
-  productId: IProduct['id'];
+  user: IUser['id'];
+  product: IProduct;
 }
 
 export interface ICart extends ICartBase {

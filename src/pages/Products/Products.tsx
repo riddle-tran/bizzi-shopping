@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Assets from 'assets';
 import { Routes } from 'Router';
-import Product from 'components/Product/Product';
+import Product from 'components/Product';
 
 import './Products.css';
 import { ProductsProps } from './interfaces';

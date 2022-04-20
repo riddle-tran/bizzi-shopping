@@ -25,8 +25,8 @@ const useCreateCartMutation = (
           ok
           data {
             id
+            product
             quantity
-            productId
           }
         }
       }
